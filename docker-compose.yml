@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: cinescope
+      POSTGRES_PASSWORD: cinescope
+      POSTGRES_DB: cinescope
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  
+  typesense:
+    image: typesense/typesense:0.25.2
+    command: --data-dir /data --api-key=cinescope-dev-key
+    ports:
+      - "8108:8108"
+    volumes:
+     - typesense_data:/data
+
+volumes:
+  postgres_data:
+  typesense_data:

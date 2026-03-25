@@ -1,0 +1,22 @@
+{
+  "name": "cinescope",
+  "scripts": {
+    "dev:backend": "pnpm --filter @cinescope/backend dev",
+    "dev:frontend": "pnpm --filter @cinescope/frontend dev",
+    "ingest": "tsx scripts/ingest.ts",
+    "cf": "tsx scripts/cf-compute.ts",
+    "seed": "tsx scripts/seed-clicks.ts",
+    "sync": "tsx scripts/sync-typesense.ts",
+    "test": "vitest run"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.1",
+    "tsx": "^4.7.0",
+    "prisma": "^5.11.0"
+  }
+}

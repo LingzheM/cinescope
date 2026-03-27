@@ -6,6 +6,25 @@ import { MovieCard } from './MovieCard'
 import { TrendingList } from './TrendingList'
 import { SearchOverlay } from './SearchOverlay'
 
+const GENRE_COLORS: Record<string, { background: string; color: string }> = {
+  'Sci-Fi':      { background: '#064e3b', color: '#6ee7b7' },
+  'Drama':       { background: '#1e1b4b', color: '#a78bfa' },
+  'Thriller':    { background: '#7f1d1d', color: '#fca5a5' },
+  'Action':      { background: '#78350f', color: '#fcd34d' },
+  'Comedy':      { background: '#0c4a6e', color: '#7dd3fc' },
+  'Horror':      { background: '#4a1d96', color: '#c4b5fd' },
+  'Romance':     { background: '#831843', color: '#fbcfe8' },
+  'Animation':   { background: '#1c3353', color: '#93c5fd' },
+  'Documentary': { background: '#1a2e05', color: '#a3e635' },
+  'Adventure':   { background: '#451a03', color: '#fdba74' },
+  'Fantasy':     { background: '#2e1065', color: '#d8b4fe' },
+  'Crime':       { background: '#1c1917', color: '#d6d3d1' },
+}
+
+function genreStyle(genre: string) {
+  return GENRE_COLORS[genre] ?? { background: '#1e293b', color: '#94a3b8' }
+}
+
 export function BentoGrid() {
   const [trending, setTrending] = useState<Movie[]>([])
   const [genres, setGenres] = useState<string[]>([])
@@ -55,7 +74,10 @@ export function BentoGrid() {
 
       {/* Bento Grid */}
       <main className="px-6 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 auto-rows-[160px]">
+        <div
+          className="grid grid-cols-1 gap-3"
+          style={{ gridTemplateColumns: '2.2fr 1fr 1fr', gridTemplateRows: '200px 120px' }}
+        >
 
           {/* Hero — spans 2 rows + 1 col on large */}
           <div className="lg:col-span-1 lg:row-span-2 row-span-2">
@@ -79,7 +101,8 @@ export function BentoGrid() {
                 <button
                   key={g}
                   onClick={() => setSearchOpen(true)}
-                  className="text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+                  style={genreStyle(g)}
+                  className="text-xs px-3 py-1.5 rounded-lg transition-colors"
                 >
                   {g}
                 </button>

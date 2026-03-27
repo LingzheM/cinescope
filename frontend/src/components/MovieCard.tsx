@@ -22,11 +22,16 @@ export function MovieCard({ movie, variant, onClick }: Props) {
     if (variant === 'hero') {
         return (
             <div
-                className='relative bg-gradient-to-b from-violet-950 to-slate-900 rounded-xl p-5 flex flex-col justify-end h-full cursor-pointer hover:ring-2 hover:ring-violet-500 transition-all'
+                className='relative rounded-xl p-5 flex flex-col justify-end h-full cursor-pointer hover:ring-2 hover:ring-violet-500 transition-all overflow-hidden'
+                style={{ background: 'linear-gradient(160deg, #1a0533 0%, #0c1445 50%, #0f172a 100%)', border: '1px solid #2d1b69' }}
                 onClick={onClick}
             >
                 <div className='absolute top-3 left-3 bg-violet-600 text-white text-xs font-bold px-3 py-1 rounded-full'>
-                    🔥 #1 TRENDING
+                    🔥 #1 TRENDING THIS WEEK
+                </div>
+                <div className='absolute top-2 right-2 w-20 h-28 rounded-lg flex items-center justify-center text-4xl flex-shrink-0'
+                    style={{ background: 'linear-gradient(135deg, #2d1b69, #1e1b4b)' }}>
+                    🎭
                 </div>
                 <div>
                     <h2 className='text-2xl font-black text-white leading-tight'>{movie.title}</h2>

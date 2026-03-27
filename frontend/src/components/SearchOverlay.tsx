@@ -1,7 +1,19 @@
 import { useEffect } from 'react'
 import { useSearch } from '../hooks/useSearch'
-import { MovieCard } from './MovieCard'
 import type { Movie } from '@cinescope/shared'
+
+function HighlightTitle({ title, query }: { title: string; query: string }) {
+  if (!query) return <span>{title}</span>
+  const idx = title.toLowerCase().indexOf(query.toLowerCase())
+  if (idx === -1) return <span>{title}</span>
+  return (
+    <span>
+      {title.slice(0, idx)}
+      <span className="text-violet-400">{title.slice(idx, idx + query.length)}</span>
+      {title.slice(idx + query.length)}
+    </span>
+  )
+}
 
 interface Props {
   open: boolean
@@ -80,10 +92,28 @@ export function SearchOverlay({ open, onClose, onSelect, availableGenres }: Prop
             {loading && <p className="p-4 text-slate-500 text-sm">Searching...</p>}
             {!loading && result && (
               <>
-                <p className="px-4 pt-3 text-xs text-slate-500">{result.total} results</p>
-                {result.hits.map(movie => (
-                  <div key={movie.id} className="px-4 py-1 border-b border-slate-800/50">
-                    <MovieCard movie={movie} variant="compact" onClick={() => { onSelect(movie); onClose() }} />
+                <p className="px-4 pt-3 text-xs text-slate-500">{result.total} results · instant</p>
+                {result.hits.map((movie, i) => (
+                  <div
+                    key={movie.id}
+                    className="px-4 py-2 border-b border-slate-800/50 flex items-center gap-3 cursor-pointer hover:bg-slate-800/50 transition-colors"
+                    style={i === 0 ? { borderLeft: '3px solid #7c3aed' } : {}}
+                    onClick={() => { onSelect(movie); onClose() }}
+                  >
+                    <div className="w-9 h-12 rounded flex items-center justify-center text-xl flex-shrink-0"
+                      style={{ background: 'linear-gradient(135deg, #1e293b, #0f172a)' }}>
+                      🎭
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-bold text-slate-200 truncate">
+                        <HighlightTitle title={movie.title} query={query} />
+                      </p>
+                      <p className="text-xs text-slate-500">{movie.genres[0]} · {movie.year ?? '—'}</p>
+                    </div>
+                    <div className="text-right flex-shrink-0">
+                      <div className="text-yellow-400 text-xs">★ {movie.avgRating.toFixed(1)}</div>
+                      <div className="text-slate-600 text-xs">{movie.ratingCount.toLocaleString()} ratings</div>
+                    </div>
                   </div>
                 ))}
               </>

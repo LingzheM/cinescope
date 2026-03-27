@@ -4,3 +4,5 @@ dist/
 data/ml-latest-small/
 .superpowers/
 
+docs/
+/generated/prisma

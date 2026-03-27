@@ -1,55 +1,52 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client-js"
-  //provider = "prisma-client"
-  //output   = "../generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Movie {
-  id  Int @id
-  title String
-  year  Int?
-  genres  String[]
-  avgRating Float @default(0)
-  ratingCount Int @default(0)
-  clickCount  Int @default(0)
-  ratings Rating[]
-  similar CFSimilarity[]  @relation("MovieSimilar")
-  sessions  UserSession[]
+  id          Int            @id
+  title       String
+  year        Int?
+  genres      String[]
+  avgRating   Float          @default(0)
+  ratingCount Int            @default(0)
+  clickCount  Int            @default(0)
+  ratings     Rating[]
+  similar     CFSimilarity[] @relation("MovieSimilar")
+  sessions    UserSession[]
 }
 
 model Rating {
   userId  Int
   movieId Int
-  score Float
-  movie Movie @relation(fields: [movieId], references: [id])
+  score   Float
+  movie   Movie @relation(fields: [movieId], references: [id])
+
   @@unique([userId, movieId])
   @@index([movieId])
 }
 
 model CFSimilarity {
-  movieId Int
-  similarMovieId  Int
-  score Float
-  movie Movie @relation("MovieSimilar", fields: [movieId], references: [id])
+  movieId        Int
+  similarMovieId Int
+  score          Float
+  movie          Movie @relation("MovieSimilar", fields: [movieId], references: [id])
+
   @@unique([movieId, similarMovieId])
   @@index([movieId, score(sort: Desc)])
 }
 
 model UserSession {
-  id  Int @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   sessionId String
-  movieId Int
-  timestamp DateTime  @default(now())
-  movie Movie @relation(fields: [movieId], references: [id])
+  movieId   Int
+  timestamp DateTime @default(now())
+  movie     Movie    @relation(fields: [movieId], references: [id])
+
   @@index([timestamp])
   @@index([movieId])
 }

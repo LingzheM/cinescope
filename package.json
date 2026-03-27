@@ -1,5 +1,6 @@
 {
   "name": "cinescope",
+  "private": true,
   "scripts": {
     "dev:backend": "pnpm --filter @cinescope/backend dev",
     "dev:frontend": "pnpm --filter @cinescope/frontend dev",
@@ -9,14 +10,17 @@
     "sync": "tsx scripts/sync-typesense.ts",
     "test": "vitest run"
   },
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
   "devDependencies": {
-    "@types/node": "^25.5.0",
-    "typescript": "^6.0.2",
-    "vitest": "^4.1.1",
+    "@types/node": "^20.0.0",
+    "prisma": "^5.11.0",
     "tsx": "^4.7.0",
-    "prisma": "^5.11.0"
+    "typescript": "^5.4.0",
+    "vitest": "^1.4.0"
+  },
+  "dependencies": {
+    "@prisma/client": "5.22.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["@prisma/client", "@prisma/engines", "esbuild", "prisma"]
   }
 }

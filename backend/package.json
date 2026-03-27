@@ -1,0 +1,17 @@
+{
+  "name": "@cinescope/backend",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@cinescope/shared": "workspace:*",
+    "@prisma/client": "^5.11.0",
+    "hono": "^4.2.0"
+  },
+  "devDependencies": {
+    "@hono/node-server": "^1.10.0",
+    "prisma": "^5.11.0"
+  }
+}
